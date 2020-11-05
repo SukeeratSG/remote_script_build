@@ -11,6 +11,29 @@ START=$(date +%s)
 
 cd "/home/sukeerat/roms/""$rom_name"
 
+
+# Ccache
+
+if [ "$use_ccache" = "yes" ];
+then
+echo -e ${blu}"CCACHE is enabled for this build"${txtrst}
+export CCACHE_EXEC=$(which ccache)
+export USE_CCACHE=1
+export CCACHE_DIR=/home/$user/ccache
+ccache -M 75G
+fi
+
+if [ "$use_ccache" = "clean" ];
+then
+export CCACHE_EXEC=$(which ccache)
+export CCACHE_DIR=/home/$user/ccache
+ccache -C
+export USE_CCACHE=1
+ccache -M 75G
+wait
+echo -e ${grn}"CCACHE Cleared"${txtrst};
+fi
+
 # With Gapps
 
 if [ "$with_gapps" = "yes" ];
