@@ -6,6 +6,7 @@ user=sukeerat
 OUT_PATH="out/target/product/""$device_codename"
 ROM_ZIP=${rom_name}*"$device_codename"*.zip
 START=$(date +%s)
+priv_to_me="/home/sukeerat/roms/configs/iron.conf"
 Chaos="/home/sukeerat/roms/configs/chaos_group.conf"
 testing="/home/sukeerat/roms/configs/testing_group.conf"
 tg_username=@Irongfly
@@ -91,10 +92,11 @@ read -r -d '' msg <<EOT
 Check progress <a href="${BUILD_URL}console">HERE</a>
 EOT
 
-# Send to testing group 
+# Send for testing only when sucessfull
 
+telegram-send --format html "$msg" --config ${priv_to_me}
 #telegram-send --format html "$msg" --config ${Chaos}    
-telegram-send --format html "$msg" --config ${testing}
+#telegram-send --format html "$msg" --config ${testing}
 
 # Time to build
 
@@ -144,7 +146,11 @@ sshpass="Your password here"
      put ${ROM_ZIP}
      bye
 !
+
+telegram-send --format html "$suc" --config ${priv_to_me}
 telegram-send --format html "$suc" --config ${testing}
+# telegram-send --format html "$suc" --config ${Chaos}
+
 else
 
 # Send message to TG
@@ -161,5 +167,8 @@ read -r -d '' fail <<EOT
 Check what caused build to fail <a href="${BUILD_URL}console">HERE</a>
 EOT
 
-telegram-send --format html "$fail" --config ${testing}
+telegram-send --format html "$fail" --config ${priv_to_me}
+# telegram-send --format html "$fail" --config ${Chaos}}
+# telegram-send --format html "$fail" --config ${testing}
+
 fi
