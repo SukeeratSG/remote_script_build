@@ -107,9 +107,9 @@ EOT
 
 # Send for testing only when sucessfull
 
-telegram-send --format html "$msg" --config ${priv_to_me}
-#telegram-send --format html "$msg" --config ${Chaos}    
-#telegram-send --format html "$msg" --config ${testing}
+telegram-send --format html "$msg" --config ${priv_to_me} --disable-web-page-preview
+#telegram-send --format html "$msg" --config ${Chaos}   --disable-web-page-preview 
+#telegram-send --format html "$msg" --config ${testing} --disable-web-page-preview
 
 # Time to build
 
@@ -160,9 +160,9 @@ sshpass="Your password here"
      bye
 !
 
-telegram-send --format html "$suc" --config ${priv_to_me}
-telegram-send --format html "$suc" --config ${testing}
-# telegram-send --format html "$suc" --config ${Chaos}
+telegram-send --format html "$suc" --config ${priv_to_me} --disable-web-page-preview
+telegram-send --format html "$suc" --config ${testing} --disable-web-page-preview
+# telegram-send --format html "$suc" --config ${Chaos} --disable-web-page-preview
 
 else
 
@@ -180,7 +180,7 @@ read -r -d '' fail <<EOT
 Check what caused build to fail <a href="${BUILD_URL}console">HERE</a>
 EOT
 
-telegram-send --format html "$fail" --config ${priv_to_me}
-# telegram-send --format html "$fail" --config ${Chaos}}
-# telegram-send --format html "$fail" --config ${testing}
+telegram-send --format html "$fail" --config ${priv_to_me} --disable-web-page-preview
+# telegram-send --format html "$fail" --config ${Chaos} --disable-web-page-preview
+# telegram-send --format html "$fail" --config ${testing} --disable-web-page-preview
 fi
