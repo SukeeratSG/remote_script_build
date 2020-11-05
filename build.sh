@@ -4,6 +4,7 @@
 
 OUT_PATH="out/target/product/""$device_codename"
 ROM_ZIP=${rom_name}*"$device_codename"*.zip
+START=$(date +%s)
 
 # Move into bash directory 
 
@@ -42,3 +43,6 @@ rm -rf ${OUT_PATH}/${ROM_ZIP}
 source build/envsetup.sh
 lunch "$rom_name"_"$device_codename"-"$build_type"
 make bacon -j$(nproc --all)
+
+END=$(date +%s)
+TIME=$(echo $((${END}-${START})) | awk '{print int($1/60)" Minutes and "int($1%60)" Seconds"}')
