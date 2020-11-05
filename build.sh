@@ -11,6 +11,19 @@ START=$(date +%s)
 
 cd "/home/sukeerat/roms/""$rom_name"
 
+# With Gapps
+
+if [ "$with_gapps" = "yes" ];
+then
+export "$gapps_command"=true
+export TARGET_GAPPS_ARCH=arm64
+fi
+
+if [ "$with_gapps" = "no" ];
+then
+export "$gapps_command"=false
+fi
+
 if [ "$sync_source" = "yes" ];
 then
 rm -rf *
