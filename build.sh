@@ -27,7 +27,7 @@ fi
 if [ "$sync_source" = "yes" ];
 then
 rm -rf *
-repo sync -c -f --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all) --no-tag
+source dep_"$vendor_typ"_"$rom_name".sh
 fi
 
 # Clean build
