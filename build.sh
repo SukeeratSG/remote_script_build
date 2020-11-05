@@ -63,3 +63,12 @@ fi
 
 END=$(date +%s)
 TIME=$(echo $((${END}-${START})) | awk '{print int($1/60)" Minutes and "int($1%60)" Seconds"}')
+
+# Upload on sourceforge 
+
+sshpass="Your password here"
+~/sshpass -e sftp -oBatchMode=no -b - IrongFly@frs.sourceforge.net << !
+     cd /home/frs/project/project_about_cats
+     put ${ROM_ZIP}
+     bye
+!
