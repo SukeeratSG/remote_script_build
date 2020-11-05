@@ -2,6 +2,7 @@
 
 # Export some variables
 
+user=sukeerat
 OUT_PATH="out/target/product/""$device_codename"
 ROM_ZIP=${rom_name}*"$device_codename"*.zip
 START=$(date +%s)
