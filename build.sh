@@ -42,7 +42,23 @@ rm -rf ${OUT_PATH}/${ROM_ZIP}
 
 source build/envsetup.sh
 lunch "$rom_name"_"$device_codename"-"$build_type"
-make bacon -j$(nproc --all)
+
+# Use brunch
+
+if [ "$use_brunch" = "yes" ];
+then
+brunch "$device_codename"
+fi
+
+if [ "$use_brunch" = "no" ];
+then
+make  "$rom_name" -j$(nproc --all)
+fi
+
+if [ "$use_brunch" = "bacon" ];
+then
+make  bacon -j$(nproc --all)
+fi
 
 END=$(date +%s)
 TIME=$(echo $((${END}-${START})) | awk '{print int($1/60)" Minutes and "int($1%60)" Seconds"}')
