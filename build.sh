@@ -6,11 +6,13 @@ user=sukeerat
 OUT_PATH="out/target/product/""$device_codename"
 ROM_ZIP=${rom_name}*"$device_codename"*.zip
 START=$(date +%s)
+Chaos="/home/sukeerat/roms/configs/chaos_group.conf"
+testing="/home/sukeerat/roms/configs/testing_group.conf"
+tg_username=@Irongfly
 
 # Move into bash directory 
 
 cd "/home/sukeerat/roms/""$rom_name"
-
 
 # Ccache
 
@@ -75,6 +77,25 @@ fi
 
 rm -rf ${OUT_PATH}/${ROM_ZIP}  
 
+
+# Send message to TG
+read -r -d '' msg <<EOT
+<b>Build Started</b>
+
+<b>Device:-           </b> ${device_codename}
+<b>Job Number:-       </b> ${BUILD_NUMBER}
+<b>Started by:-       </b> ${tg_username}
+<b>Rom being built:-  </b> ${rom_name}
+<b>Vendor Type :-     </b> ${vendor_typ}
+
+Check progress <a href="${BUILD_URL}console">HERE</a>
+EOT
+
+# Send to testing group 
+
+#telegram-send --format html "$msg" --config ${Chaos}    
+telegram-send --format html "$msg" --config ${testing}
+
 # Time to build
 
 source build/envsetup.sh
@@ -100,6 +121,21 @@ fi
 END=$(date +%s)
 TIME=$(echo $((${END}-${START})) | awk '{print int($1/60)" Minutes and "int($1%60)" Seconds"}')
 
+# Send message to TG
+
+read -r -d '' suc <<EOT
+<b>Build Finished</b>
+
+<b>Time:-                           </b> ${TIME}
+<b>Rom being built:-                </b> ${rom_name}
+<b>Device:-                         </b> ${device_codename}
+<b>VendorType :-                    </b> ${vendor_typ}
+<b>Build status:-                   </b> Success
+<b>With Gapps:-                     </b> ${with_gapps}
+<b>Download:-                       </b> Uploaded Sucessfully
+<b>@RAKMOJR @desirexel @Siddu_Aj    </b> Ready to test bois?
+EOT
+
 # Upload on sourceforge 
 
 sshpass="Your password here"
@@ -108,3 +144,22 @@ sshpass="Your password here"
      put ${ROM_ZIP}
      bye
 !
+telegram-send --format html "$suc" --config ${testing}
+else
+
+# Send message to TG
+
+read -r -d '' fail <<EOT
+<b>Build Finished</b>
+
+<b>Time:-</b> ${TIME}
+<b>Rom being built:-  </b> ${rom_name}
+<b>Device:-           </b> ${device_codename}
+<b>Vendor Type :-     </b> ${vendor_typ}
+<b>Build status:-     </b> Failed
+
+Check what caused build to fail <a href="${BUILD_URL}console">HERE</a>
+EOT
+
+telegram-send --format html "$fail" --config ${testing}
+fi
