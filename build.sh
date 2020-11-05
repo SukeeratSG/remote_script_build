@@ -11,6 +11,16 @@ Chaos="/home/sukeerat/roms/configs/chaos_group.conf"
 testing="/home/sukeerat/roms/configs/testing_group.conf"
 tg_username=@Irongfly
 
+# Colors makes things beautiful
+
+export TERM=xterm
+
+    red=$(tput setaf 1)             #  red
+    grn=$(tput setaf 2)             #  green
+    blu=$(tput setaf 4)             #  blue
+    cya=$(tput setaf 6)             #  cyan
+    txtrst=$(tput sgr0)             #  Reset
+
 # Move into bash directory 
 
 cd "/home/sukeerat/roms/""$rom_name"
