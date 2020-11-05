@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# curl https://raw.githubusercontent.com/SukeeratSG/remote_script_build/iron/build.sh>script_build.sh
+# Make necessary changes before executing script
+
 # Export some variables
 
 user=sukeerat
@@ -180,5 +183,4 @@ EOT
 telegram-send --format html "$fail" --config ${priv_to_me}
 # telegram-send --format html "$fail" --config ${Chaos}}
 # telegram-send --format html "$fail" --config ${testing}
-
 fi
